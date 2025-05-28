@@ -18,7 +18,7 @@ async def get_home(
     user: User = Depends(get_current_user),
     session: AsyncSession = Depends(db_session)
 ):
-    """Маршрут для получения главное страницы."""
+    """Маршрут для получения главной страницы."""
     return await weather_service.get_home(user, session)
 
 

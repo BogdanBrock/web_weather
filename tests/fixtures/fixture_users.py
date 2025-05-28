@@ -18,7 +18,7 @@ PASSWORD = 'qwerty12345'
 
 @pytest.fixture
 def user_request():
-    """Фикстура для запроса."""
+    """Фикстура для запроса пользователя."""
     return dict(
         first_name='user',
         last_name='user',
@@ -30,7 +30,7 @@ def user_request():
 
 @pytest.fixture
 def user_response(user_request):
-    """Фикстура для ответных данных."""
+    """Фикстура для ответных данных пользователя."""
     return dict(
         id=1,
         first_name=user_request['first_name'],
@@ -42,7 +42,7 @@ def user_response(user_request):
 
 @pytest_asyncio.fixture
 async def user(test_db_session):
-    """Фикстура для пользователя."""
+    """Фикстура для создания объекта пользователя."""
     data = dict(
         first_name='user_1',
         last_name='user_1',

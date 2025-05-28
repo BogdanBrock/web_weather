@@ -44,7 +44,7 @@ async def test_db_session() -> AsyncGenerator[AsyncSession, None]:
 
 @pytest_asyncio.fixture(autouse=True)
 async def override_session(test_db_session):
-    """Фикстура для переопределения сессии в прилоежении."""
+    """Фикстура для переопределения сессии в приложении."""
     async def mock_get_session():
         yield test_db_session
     app.dependency_overrides = {}

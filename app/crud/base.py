@@ -16,7 +16,7 @@ class CRUDBase(Generic[ModelType, SchemaType]):
     """Класс для создания базовых CRUD-операций."""
 
     def __init__(self, model: ModelType) -> None:
-        """Метод для иницилазации атрибутов объекта класса CRUDBase."""
+        """Метод для инициализации атрибутов объекта класса CRUDBase."""
         self.model = model
 
     async def get_all(self, session: AsyncSession) -> list[ModelType]:
