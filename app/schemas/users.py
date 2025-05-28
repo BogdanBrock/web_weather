@@ -19,7 +19,7 @@ class UserUpdateSchema(BaseModel):
     first_name: str = Field(default=None)
     last_name: str = Field(default=None)
     username: str = Field(default=None)
-    email: str = Field(default=None)
+    email: EmailStr = Field(default=None)
     password: str = Field(default=None)
 
 
@@ -30,4 +30,4 @@ class UserReadSchema(BaseModel):
     first_name: str
     last_name: str
     username: str
-    email: str
+    email: EmailStr

@@ -3,10 +3,10 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from fastapi import HTTPException, status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.exceptions import NotFoundError
 from app.crud import crud_weather
 from app.models import User, Weather
 from app.schemas import WeatherCreateSchema
@@ -54,10 +54,7 @@ class WeatherService:
         try:
             return response.json()['results'][0]
         except KeyError:
-            raise HTTPException(
-                detail='Такого города не существует',
-                status_code=status.HTTP_404_NOT_FOUND
-            )
+            raise NotFoundError('Такого города не существует.')
 
     async def get_weather_data(
         self,

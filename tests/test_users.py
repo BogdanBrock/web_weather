@@ -4,13 +4,13 @@ from http import HTTPStatus
 
 import pytest
 from httpx import AsyncClient
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import bcrypt_context
 from app.models import User
-from .utils import check_json_data, check_db_data, check_db_fields
-from .fixtures.fixture_users import AUTH_URL, USER_URL, ME_URL, PASSWORD
+from .fixtures.fixture_users import AUTH_URL, ME_URL, PASSWORD, USER_URL
+from .utils import check_db_data, check_db_fields, check_json_data
 
 
 @pytest.mark.asyncio

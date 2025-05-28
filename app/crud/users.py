@@ -1,10 +1,9 @@
 """Модуль для создания CRUD-операций для пользователя."""
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
-
 from .base import CRUDBase
 
 
@@ -21,6 +20,20 @@ class CRUDUser(CRUDBase):
             select(User).where(User.username == username)
         )
         return user.scalar()
+
+    async def get_username_and_email(
+        self,
+        username: str,
+        email: str,
+        session: AsyncSession
+    ) -> tuple[str, str] | None:
+        """Метод для получения имени пользователя и почты."""
+        user = await session.execute(
+            select(User.username, User.email).
+            where(or_(User.username == username,
+                      User.email == email))
+        )
+        return user.mappings().first()
 
 
 crud_user = CRUDUser(User)

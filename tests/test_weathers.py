@@ -4,11 +4,12 @@ from http import HTTPStatus
 
 import pytest
 from httpx import AsyncClient
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Weather
 from .fixtures.fixture_weathers import WEATHER_URL
+from .utils import check_db_fields
 
 
 @pytest.mark.asyncio
@@ -46,3 +47,10 @@ async def test_anon_user_can_get_count_queries(client: AsyncClient):
     """Тест для проверки маршрута получения количества запросов."""
     response = await client.get(WEATHER_URL + 'count-queries/')
     assert response.status_code == HTTPStatus.OK, response.json()
+
+
+def test_model_weather():
+    expected_fields = {
+        'id', 'city', 'country', 'time', 'temperature', 'windspeed', 'user_id'
+    }
+    check_db_fields(expected_fields, Weather)

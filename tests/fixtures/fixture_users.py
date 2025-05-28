@@ -1,15 +1,14 @@
 """Модуль создания фикстур для пользователей."""
 
-from httpx import AsyncClient, ASGITransport
 import pytest
 import pytest_asyncio
-from fastapi.testclient import TestClient
+from httpx import ASGITransport, AsyncClient
 
-from app.models import User
 from app.core.security import bcrypt_context, get_current_user
 from app.main import app
-from ..utils import create_db_obj
+from app.models import User
 from ..conftest import BASE_URL
+from ..utils import create_db_obj
 
 AUTH_URL = f'{BASE_URL}/auth/'
 USER_URL = f'{BASE_URL}/users/'
@@ -31,7 +30,7 @@ def user_request():
 
 @pytest.fixture
 def user_response(user_request):
-    """Фикстура для ответа."""
+    """Фикстура для ответных данных."""
     return dict(
         id=1,
         first_name=user_request['first_name'],
@@ -45,10 +44,10 @@ def user_response(user_request):
 async def user(test_db_session):
     """Фикстура для пользователя."""
     data = dict(
-        first_name='user',
-        last_name='user',
-        username='user',
-        email='user@yandex.ru',
+        first_name='user_1',
+        last_name='user_1',
+        username='user_1',
+        email='user_1@yandex.ru',
         password=bcrypt_context.hash(PASSWORD),
     )
     return await create_db_obj(test_db_session, User(**data))
@@ -57,7 +56,10 @@ async def user(test_db_session):
 @pytest_asyncio.fixture
 async def client():
     """Фикстура для создания анонимного клиента."""
-    async with AsyncClient(transport=ASGITransport(app=app), base_url='https://test') as client:
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url='https://test'
+    ) as client:
         yield client
 
 
@@ -65,5 +67,8 @@ async def client():
 async def user_client(user):
     """Фикстура создания клиента для пользователя."""
     app.dependency_overrides[get_current_user] = lambda: user
-    async with AsyncClient(transport=ASGITransport(app=app), base_url='https://test') as client:
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url='https://test'
+    ) as client:
         yield client
