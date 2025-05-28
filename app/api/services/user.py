@@ -50,7 +50,6 @@ class UserService:
 
     async def update_me(
         self,
-        response: Response,
         user: User,
         schema: UserUpdateSchema,
         session: AsyncSession,

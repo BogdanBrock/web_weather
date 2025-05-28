@@ -1,2 +1,6 @@
 from .user import UserCreateSchema, UserUpdateSchema, UserReadSchema
-from .weather import WeatherReadSchema
+from .weather import (
+    WeatherCreateSchema,
+    WeatherReadSchema,
+    WeatherQueryCountReadSchema
+)

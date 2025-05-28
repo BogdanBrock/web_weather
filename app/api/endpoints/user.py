@@ -1,6 +1,6 @@
 """Модуль для создания endpoints для пользователей."""
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -44,13 +44,12 @@ async def get_me(user: User = Depends(get_current_user)):
 
 @user_router.patch('/me/', response_model=UserReadSchema)
 async def update_me(
-    response: Response,
     schema: UserUpdateSchema,
     user: User = Depends(get_current_user),
     session: AsyncSession = Depends(db_session),
 ):
     """Маршрут для обновления личной страницы пользователя."""
-    return await user_service.update_me(response, user, schema, session)
+    return await user_service.update_me(user, schema, session)
 
 
 @user_router.delete(

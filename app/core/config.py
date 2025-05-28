@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from httpx import AsyncClient
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
