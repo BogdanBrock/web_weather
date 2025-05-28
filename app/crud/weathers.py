@@ -1,9 +1,10 @@
 """Модуль для создания CRUD операций для погоды."""
 
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Weather, User
+from app.models import User, Weather
+
 from .base import CRUDBase
 
 

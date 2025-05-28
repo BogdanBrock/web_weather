@@ -1,6 +1,6 @@
 """Модуль для реализации авторизации пользователей."""
 
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 import jwt
 from fastapi import Depends
@@ -31,32 +31,32 @@ async def authenticate_user(
     return user
 
 
-async def create_access_token(user_id: int, expiration_time: str) -> str:
+async def create_access_token(user_id: int, expiration_time: int) -> str:
     """Функция для создания токена."""
     time = datetime.now(timezone.utc) + timedelta(minutes=expiration_time)
     payload = {
-        'sub': user_id,
-        'exp': int(time.timestamp())
+        'sub': str(user_id),
+        'exp': time.timestamp()
     }
     return jwt.encode(
         payload,
         settings.SECRET_KEY,
-        algorithm=settings.ALGHORITM
+        algorithm=settings.ALGORITHM
     )
 
 
-async def decode_token(token):
+async def decode_token(token: str) -> dict:
     """Функция для декодирования токена."""
     try:
         return jwt.decode(
             token,
             settings.SECRET_KEY,
-            algorithms=(settings.ALGHORITM,)
+            algorithms=(settings.ALGORITHM,)
         )
     except jwt.ExpiredSignatureError:
-        raise UnauthorizedError('Проверьте введенные вами данные.')
-    except jwt.PyJWTError:
-        raise UnauthorizedError('Недействительный токен.')
+        raise UnauthorizedError('Срок действия токена истек')
+    except jwt.PyJWTError as error:
+        raise UnauthorizedError(f'Недействительный токен: {error}')
 
 
 async def get_current_user(
@@ -65,7 +65,7 @@ async def get_current_user(
 ) -> User | None:
     """Функция для получения текущего пользователя."""
     payload = await decode_token(token)
-    user = await crud_user.get(payload.get('sub'), session)
+    user = await crud_user.get(int(payload.get('sub')), session)
     if not user:
         raise UnauthorizedError('Проверьте, что вы авторизованы.')
     return user

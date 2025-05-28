@@ -3,8 +3,9 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .base import CRUDBase
 from app.models import User
+
+from .base import CRUDBase
 
 
 class CRUDUser(CRUDBase):

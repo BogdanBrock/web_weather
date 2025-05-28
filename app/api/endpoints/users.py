@@ -8,7 +8,7 @@ from app.api.services import user_service
 from app.core.database import db_session
 from app.core.security import get_current_user
 from app.models import User
-from app.schemas import UserCreateSchema, UserUpdateSchema, UserReadSchema
+from app.schemas import UserCreateSchema, UserReadSchema, UserUpdateSchema
 
 auth_router = APIRouter()
 user_router = APIRouter()

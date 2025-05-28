@@ -4,7 +4,7 @@ from pydantic import BaseModel, PositiveInt
 
 
 class WeatherCreateSchema(BaseModel):
-    """Схема WeatherReadSchema для чтения данных."""
+    """Схема WeatherCreateSchema для создания данных."""
 
     city: str
     country: str
@@ -26,5 +26,6 @@ class WeatherReadSchema(BaseModel):
 
 
 class WeatherQueryCountReadSchema(BaseModel):
+    """Схема WeatherQueryCountReadSchema для чтения данных."""
     city: str
     count: int

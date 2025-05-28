@@ -1,17 +1,16 @@
 """Модуль для создания сервиса для пользователей."""
 
-from fastapi import Response
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.models import User
-from app.crud import crud_user
 from app.core.security import (
-    bcrypt_context,
     authenticate_user,
+    bcrypt_context,
     create_access_token
 )
+from app.crud import crud_user
+from app.models import User
 from app.schemas import UserCreateSchema, UserUpdateSchema
 
 

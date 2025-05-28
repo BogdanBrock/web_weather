@@ -1,6 +1,6 @@
 """Модуль для создания CRUD-операций."""
 
-from typing import TypeVar, Generic
+from typing import Generic, TypeVar
 
 from pydantic import BaseModel
 from sqlalchemy import select

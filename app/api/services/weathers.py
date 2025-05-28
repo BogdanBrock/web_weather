@@ -3,13 +3,13 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from fastapi import HTTPException, status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
 from app.crud import crud_weather
-from app.schemas import WeatherCreateSchema
 from app.models import User, Weather
+from app.schemas import WeatherCreateSchema
 
 
 class WeatherService:
