@@ -42,6 +42,11 @@ cd docker
 docker compose up -d
 ```
 
+- Для того, чтобы запустить тесты, находясь в той же директории выполнить команду:
+```bash
+docker compose exec app pytest
+```
+
 - Все маршруты доступны по адресу:
 ```bash
 http://127.0.0.1:8000/docs#/
